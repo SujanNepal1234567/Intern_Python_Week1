@@ -62,7 +62,7 @@ if __name__ == '__main__':
             file_object.view_file_only(name_of_new_file)
 
         case "10": 
-            name_of_file_to_be_deleted = input("Enter new file name with extension to \
+            name_of_file_to_be_deleted = input("Enter file name with extension to \
                                                be deleted: ")
             file_object.delete_file(name_of_file_to_be_deleted)
 
