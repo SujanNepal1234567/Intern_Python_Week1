@@ -1,29 +1,17 @@
+"""
+    Class module for using os module to handle files
+"""
 # basename function
 import os
 import stat
 import subprocess
 import shutil
 import lorem
-# from stat import 
-"""Finds absolute path ie from home folder.
+# from stat import
 
-        A more detailed description of the function.
+class FileHandling:
+    """Class to have methods for handling documents on a directory"""
 
-        Args:
-            parameter1 (type): Description of parameter1.
-            parameter2 (type): Description of parameter2.
-
-        Returns:
-            type: Description of the return value.
-
-        Raises:
-            ErrorType: Description of the error that can be raised.
-
-        Examples:
-            An example of how to use the function.
-
-        """
-class FileHandling: 
     def find_absolute_path(self, filename):
         """Finds absolute path ie from home folder.
 
@@ -37,24 +25,20 @@ class FileHandling:
             ErrorType:
 
         """
-        out = os.path.abspath("{}".format(filename))
+        out = os.path.abspath(f"{filename}")
         return out
 
     def list_directory_content(self):
         """lists the current folder of the directory.
-        
         Returns:
             Prints the list of directory content 
-
         Raises:
             ErrorType:
-            
         """
         # absolute_path= find_absolute_path(filename)
         entries = os.listdir()
         for entry in entries:
             print(entry)
-
     # list_directory_content('/home/sujan/Desktop/MoneyHoney')
     # find_absolute_path("imposer.py")
 
@@ -87,7 +71,7 @@ class FileHandling:
             ErrorType:
             
         """
-        subprocess.call('cp {} {}'.format(filename, filename+'1'), shell=True)
+        subprocess.call(f"cp {filename} {filename+'1'}", shell=True)
 
     def copy_folder(self, src_path, dst_path):
         """Copy folder in the current directory and saves folder to the input directory.
@@ -101,12 +85,11 @@ class FileHandling:
 
         Raises:
             ErrorType:
-            
         """
         shutil.copy(src_path, dst_path)
         print('Copied')
 
-    def move_folder(self, src_path, dst_path): 
+    def move_folder(self, src_path, dst_path):
         """Move folder in the current directory and saves folder to the input directory.
 
         Args:
@@ -133,7 +116,9 @@ class FileHandling:
             ErrorType:
             
         """
-        f = open("".format(name), "a+")
+        # open(name, "a+")
+        with open(f'{name}', "a+", encoding="utf8"):
+            pass
 
     # Create a text file with random text
 
@@ -147,8 +132,10 @@ class FileHandling:
             ErrorType:
             
         """
-        f= open("".format(name), "a+")
-        name.write(lorem.paragraph())
+        # open(name, "a+")
+        # name.write(lorem.paragraph())
+        with open(f'{name}', "a+", encoding="utf8") as file:
+            file.write(lorem.paragraph)
 
     # ● View contents of a file
     def view_file_only(self, name):
@@ -164,10 +151,13 @@ class FileHandling:
             ErrorType:
             
         """
-        a= open("".format(name),"r")
-        print(a)
+        # a= open("".format(name),"r")
+        # print(a)
+        with open(f'{name}', "r", encoding="utf8") as file:
+            file_data= file.read()
+            print(file_data)
 
-    # ● Delete file
+# ● Delete file
     def delete_file(self, name):
         """Delete file in the current directory 
 
@@ -187,26 +177,6 @@ class FileHandling:
         else:
             print("The file does not exist")
 
-    # ● Delete folder
-    def delete_file(self, name):
-        """Delete folder in the current directory 
-
-        Args:
-            name (str): Takes the name of the file to be deleted
-
-        Returns:
-           Deleted message if deleted. If file doesnt exist, sends a no file case
-
-        Raises:
-            ErrorType:
-                -File doesnt exist: Whn file not found then raises this in print 
-            
-        """
-        if os.path.exists("{}".format(name)):
-            os.remove("{}".format(name))
-        else:
-            print("The file does not exist") 
-
     # ● Hide a folder
     def hide_file(self, name):
         """Hides a folder in the current directory by adding '.' infront of its name
@@ -217,7 +187,7 @@ class FileHandling:
         """
         new_name = '.'+ name
         os.rename (name , new_name)
-        
+
     # ● Toggle viewing hidden folders
     def toggle_hidden_files(self):
 
@@ -225,12 +195,11 @@ class FileHandling:
 
         Returns:
             List of directory of the current directory
-        """        
-
+        """
         os.system('ls -a')
 
     # ● Make a file executable
-    def make_file_executable(self, name): 
+    def make_file_executable(self, name):
         ''' Make a file executable- only user!
 
         Args: 
@@ -241,11 +210,10 @@ class FileHandling:
         
         TO DO: 
         -This code Removes Group and Other's permission
-        -Have to explicitly define those!'''
-    
+        -Have to explicitly define those!
+        '''
+
         path = self.find_absolute_path(name)
         os.chmod(path,  stat.S_IXUSR| stat.S_IWUSR| stat.S_IRWXU )
-
     # ● Other operations you want to implement
-        #so fun 
-
+        #so fun
